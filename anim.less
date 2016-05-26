@@ -1,0 +1,33 @@
+/* Animation mixins */
+.anim-hide() {
+  opacity:0;
+  visibility:hidden;
+}
+.anim-show() {
+  opacity:1;
+  visibility:visible;
+}
+
+/* Fade-in classes */
+.fade-in,
+.fade-up,
+.fade-right,
+.fade-down,
+.fade-left {
+  .anim-hide;
+  transition:opacity 0.8s ease-in-out, transform 0.8s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.fade-up { transform: translate(0, 15px); }
+.fade-down { transform: translate(0, -15px); }
+.fade-right { transform: translate(-15px, 0); }
+.fade-left { transform: translate(15px, 0); }
+
+.anim-init .fade-in, .anim-init.fade-in,
+.anim-init .fade-up, .anim-init.fade-up,
+.anim-init .fade-right, .anim-init.fade-right,
+.anim-init .fade-down, .anim-init.fade-down,
+.anim-init .fade-left, .anim-init.fade-left {
+  .anim-show;
+  transform: translate(0, 0);
+}
