@@ -13,9 +13,6 @@ var ANIM = (function() {
   // NOTE: The default is set to 40ms.
   // 4.) Set children elements with a class to hook onto. The default is set to all of the fade-* classes (fade-in, fade-up, fade-down, fade-left, fade-right)
 
-  var defaultTimingDelay = 0,
-      defaultTimingIncrement = 40;
-
   // Setting timing delays & increments of children
   function setTiming(arg) {
 
