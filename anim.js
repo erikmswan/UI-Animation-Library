@@ -1,53 +1,70 @@
 var ANIM = (function() {
 
-  /* GRADUAL FADE-INS ------------------------------ */
+  /* SETTING INCREMENTAL TIMING ------------------------------ */
 
   // HOW TO USE
-  // 1.) Set a parent element with with a class onto which to hook (commonly set to a class like 'fade-in-gradual')
+  // 1.) Set a parent element with with a class onto which to hook (commonly set to a class like 'set-timing')
   // There are two ways to proceed from here -- set attributes or pass explicit timing delays and increments. The process for adding attributes is
-  // detailed below -- if you would prefer to pass them explicitly, simply pass them along with your selector into the 'gradualFadeIn' function.
+  // detailed below -- if you would prefer to pass them explicitly, simply pass them along with your selector into the 'setTiming' function.
   // 2.) Set the timing-delay attribute of the parent element. This will determine when the fade-ins START. For example, setting a
   // timing-delay like this -- timing-delay="2000" -- will have the first fade-in start at 2000ms after the animation is initiated.
   // NOTE: The default is 0ms.
   // 3.) Set the timing-increment attribute of the parent element. This will determine the amount of time between each individual fade-* animation.
   // NOTE: The default is set to 40ms.
-  // 4.) Set children elements with any of the fade-* classes (fade-in, fade-up, fade-down, fade-left, fade-right)
-  // 3.) Initiate the animation by adding the 'anim-init' class to either the parent element, or an element further up the chain (both work).
+  // 4.) Set children elements with a class to hook onto. The default is set to all of the fade-* classes (fade-in, fade-up, fade-down, fade-left, fade-right)
 
-  var fades = '.fade-in, .fade-up, .fade-right, .fade-down, .fade-left',
-      defaultTimingDelay = 0,
+  var defaultTimingDelay = 0,
       defaultTimingIncrement = 40;
 
-  // Setting fade-in delays of children of gradualFadeInSelector with any of the fade-* classes
-  function gradualFadeIn(selector, start, increment) {
-    $(selector).each(function(el) {
-      var timingDelay = start ? start : getTimingDelay($(this)), // start value
-          timingIncrement = increment ? increment : getTimingIncrement($(this));
-      setTimingIncrement($(this).find(fades), timingDelay, timingIncrement);
+  // Setting timing delays & increments of children
+  function setTiming(arg) {
+
+    // defaults
+    var opt = {
+      parent: arg && arg.parent ? arg.parent : 'set-timing',
+      child: arg && arg.child ? arg.child : '.fade-in, .fade-up, .fade-right, .fade-down, .fade-left',
+      delay: 0,
+      increment: 40,
+      type: arg && arg.type ? arg.type : 'transition'
+    }
+
+    $(opt.parent).each(function(el) {
+      if (!arg && !arg.delay && getTimingDelay($(this)) !== null) {
+        opt.delay = getTimingDelay($(this));
+      } else if (arg && arg.delay) {
+        opt.delay = arg.delay;
+      }
+      if (!arg && !arg.increment && getTimingIncrement($(this)) !== null) {
+        opt.increment = getTimingIncrement($(this));
+      } else if (arg && arg.increment) {
+        opt.increment = arg.increment;
+      }
+      setChildTiming($(this).find(opt.child), opt.delay, opt.increment, opt.type);
     });
   }
 
   // Utility function to get the timing delay from the 'timing-delay' attribute
   function getTimingDelay(el) {
     var timingDelayAttr = parseInt($(el).attr('timing-delay')),
-        timingDelay = isNaN(timingDelayAttr) ? defaultTimingDelay : timingDelayAttr;
+        timingDelay = isNaN(timingDelayAttr) ? null : timingDelayAttr;
     return timingDelay;
   }
 
   // Utility function to get the timing increment from the 'timing-increment' attribute
   function getTimingIncrement(el) {
     var timingIncrementAttr = parseInt($(el).attr('timing-increment')),
-        timingIncrement = isNaN(timingIncrementAttr) ? defaultTimingIncrement : timingIncrementAttr;
+        timingIncrement = isNaN(timingIncrementAttr) ? null : timingIncrementAttr;
     return timingIncrement;
   }
 
   // Utility function to increment timing delays on passed el, starting from the start argument,
   // and incrementing by the increment argument
-  function setTimingIncrement(el, start, increment) {
+  function setChildTiming(el, start, increment, type) {
     var timingDelay = start,
         realIncrement = increment === undefined ? 0 : increment;
     $(el).each(function() {
-      $(this).css('transition-delay', timingDelay + 'ms');
+      if (type === 'transition') $(this).css('transition-delay', timingDelay + 'ms');
+      if (type === 'animation') $(this).css('animation-delay', timingDelay + 'ms');
       timingDelay += realIncrement;
     });
   }
@@ -104,12 +121,12 @@ var ANIM = (function() {
     var timingDelay = start ? start : getTimingDelay(selector),
         timingIncrement = increment ? increment : getTimingIncrement(selector);
 
-    setTimingIncrement(selector + ' span.' + fadeInClass, timingDelay, timingIncrement);
+    setChildTiming(selector + ' span.' + fadeInClass, timingDelay, timingIncrement);
   }
 
 
   return {
-    gradualFadeIn: gradualFadeIn,
+    setTiming: setTiming,
     letterFadeIn: letterFadeIn
   }
 })();
