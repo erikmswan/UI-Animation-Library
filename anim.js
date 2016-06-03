@@ -26,12 +26,12 @@ var ANIM = (function() {
     }
 
     $(opt.parent).each(function(el) {
-      if (!arg && !arg.delay && getTimingDelay($(this)) !== null) {
+      if ((!arg || !arg.delay) && getTimingDelay($(this)) !== null) {
         opt.delay = getTimingDelay($(this));
       } else if (arg && arg.delay) {
         opt.delay = arg.delay;
       }
-      if (!arg && !arg.increment && getTimingIncrement($(this)) !== null) {
+      if ((!arg || !arg.increment) && getTimingIncrement($(this)) !== null) {
         opt.increment = getTimingIncrement($(this));
       } else if (arg && arg.increment) {
         opt.increment = arg.increment;
