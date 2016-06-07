@@ -1,9 +1,8 @@
 # UI-Animation-Library
 Some of my useful methods for UI animation scoped under the ANIM object.
 
-##   HOW TO USE
 
-### Set Incremental Timing
+## Set Incremental Timing
 
 This method will automatically add incremented delays to a set of elements, which is useful for when you'd like to stagger animations. While there are a number of options out there to achieve this effect (like GSAP), the main feature of this method is that it will also look for html attributes on the parent element in addition to passed options.
 
@@ -20,7 +19,7 @@ var opt = {
 ANIM.setTiming(opt);
 ```
   
-#### Set-up
+##### Set-up
   1.) Firstly, set a class on a parent element whose children you would like to have incremental timing set. The default class for this is 'set-timing.' If attributes are set, this is the element that should have them.
   
   2.) Secondly, set a selector onto the children -- this is how the method will know where to put the incremental timing delays.
@@ -28,7 +27,7 @@ ANIM.setTiming(opt);
   
   3.) Thirdly, determine whether you want your delay to affect transitions or animations. This will change the property that is set to either 'transition-delay' or 'animation-delay.'
   
-#### Options vs. Attributes
+##### Options vs. Attributes
   1.) There are two ways to set the delay and increment values -- you can either set it as an integer in the options, or you can set an attribute on the parent element (both in ms). I found the attributes very useful for times when I had to write a lot of markup and I didn't want to keep switching back and forth to a script to manage all of the animations. With this, you can manage your animation timeline right in the markup.
   ..a. Timing delay is set as: timing-delay="300"
   ..b. Timing increment is set as: timing-increment="40"
@@ -46,7 +45,7 @@ ANIM.setTiming(opt);
   ..'transition-delay:620ms;'
   And so on.
   
-#### Putting it all together
+##### Putting it all together
 
 So once everything is set up, you should wind up with markup like this after the method has done its thing:
 
@@ -65,7 +64,8 @@ So once everything is set up, you should wind up with markup like this after the
 ```
   NOTE: These will still require the 'anim-init' class on either the parent or the children (or however you've set up your CSS) to trigger the animation.
   
-### Letter Fade In
+  
+## Letter Fade In
 
 I've also created a method that builds off of the incremental timing to incrementally animate letters. 
 
@@ -76,6 +76,7 @@ ANIM.letterFadeIn(selector, animClass[, start[, increment]]);
 ```
   
 It can handle nested HTML elements (like span), but I would recommend keeping this as close as possible to the target letters.
+
 
 ## Plans for improvement
 
@@ -134,6 +135,7 @@ This is the planned improvement. Setting this mode will result in increments set
 ```
 
 This time, the method will go through all of the siblings before delving into any children, where it will start the increments over from the set delay. I found this useful for stuff like a mobile-nav where only a single level is shown at a time.
+
 
 # Thanks!
 This repo is mostly for me, but if you find something useful, feel free to use :)
