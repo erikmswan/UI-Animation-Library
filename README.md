@@ -5,7 +5,7 @@ Some of my useful methods for UI animation scoped under the ANIM object.
 
 ### Set Incremental Timing
 
-This method will automatically add incremented delays to a set of elements. This is useful for when you'd like to stagger animations. While there are a number of other options to use out there, the main feature of this method is that it will also look for html attributes on the parent element in addition to passed options.
+This method will automatically add incremented delays to a set of elements, which is useful for when you'd like to stagger animations. While there are a number of options out there to achieve this effect (like GSAP), the main feature of this method is that it will also look for html attributes on the parent element in addition to passed options.
 
 ```javascript
 // defaults shown here
@@ -22,7 +22,6 @@ ANIM.setTiming(opt);
   
 #### Set-up
   1.) Firstly, set a class on a parent element whose children you would like to have incremental timing set. The default class for this is 'set-timing.' If attributes are set, this is the element that should have them.
-  ..a. Note: attributes always have priority.
   
   2.) Secondly, set a selector onto the children -- this is how the method will know where to put the incremental timing delays.
   ..a. The default classes are 'fade-in' classes that you can find in the stylesheet in this repo. Once the these values are set, the animation still needs to get triggered, and I've set up the fade-* classes to get triggered if either themselves or a parent gains the 'anim-init' class.
@@ -30,9 +29,10 @@ ANIM.setTiming(opt);
   3.) Thirdly, determine whether you want your delay to affect transitions or animations. This will change the property that is set to either 'transition-delay' or 'animation-delay.'
   
 #### Options vs. Attributes
-  1.) There are two ways to set the delay and increment values -- you can either set it as an integer in ms in the options, or you can set an attribute on the parent element. I found the attributes very useful for times when I had to write a lot of markup, and I didn't want to keep switching back and forth to a script to manage all of the animations. This way, you can manage your animation timeline right in the markup.
+  1.) There are two ways to set the delay and increment values -- you can either set it as an integer in the options, or you can set an attribute on the parent element (both in ms). I found the attributes very useful for times when I had to write a lot of markup and I didn't want to keep switching back and forth to a script to manage all of the animations. With this, you can manage your animation timeline right in the markup.
   ..a. Timing delay is set as: timing-delay="300"
   ..b. Timing increment is set as: timing-increment="40"
+  ..c. Note: attributes always have priority.
   
   To give an example, if you set the timing delay to 300 and the increment to 40, the children elements will get styles like this:
   ..'transition-delay:300ms;'
@@ -48,7 +48,7 @@ ANIM.setTiming(opt);
   
 #### Putting it all together
 
-So once everything is set up, you should wind up with markup like this in your view:
+So once everything is set up, you should wind up with markup like this after the method has done its thing:
 
 ```html
 <section class="set-timing" timing-delay="300" timing-increment="40">
@@ -76,6 +76,64 @@ ANIM.letterFadeIn(selector, animClass[, start[, increment]]);
 ```
   
 It can handle nested HTML elements (like span), but I would recommend keeping this as close as possible to the target letters.
+
+## Plans for improvement
+
+I'd like to add a 'mode' option that will take into account the nesting of children elements. I plan two values for this: 'linear' or 'hierarchical.' The difference between the two is probably best illustrated with an example.
+
+#### Linear
+
+A linear mode will set delays like this:
+
+```html
+<ul class="set-timing" timing-delay="200" timing-increment="20">
+      <li class="fade-up" style="transition-delay:200ms">
+            Lorem Ipsum
+      </li>
+      <li class="fade-up" style="transition-delay:220ms">
+            <ul>
+                  <li class="fade-up" style="transition-delay:240ms">
+                        Lorem Ipsum
+                  </li class="fade-up" style="transition-delay:260ms">
+                  <li>
+                        Lorem Ipsum
+                  </li>
+            </ul>
+      </li>
+      <li class="fade-up" style="transition-delay:280ms">
+            Lorem Ipsum
+      </li>
+</ul>
+```
+
+The method will simply apply delays to elements in their source order. This is how it works now.
+
+#### Hierarchical
+
+This is the planned improvement. Setting this mode will result in increments set like this:
+
+```html
+<ul class="set-timing" timing-delay="200" timing-increment="20">
+      <li class="fade-up" style="transition-delay:200ms">
+            Lorem Ipsum
+      </li>
+      <li class="fade-up" style="transition-delay:220ms">
+            <ul>
+                  <li class="fade-up" style="transition-delay:200ms">
+                        Lorem Ipsum
+                  </li class="fade-up" style="transition-delay:220ms">
+                  <li>
+                        Lorem Ipsum
+                  </li>
+            </ul>
+      </li>
+      <li class="fade-up" style="transition-delay:240ms">
+            Lorem Ipsum
+      </li>
+</ul>
+```
+
+This time, the method will go through all of the siblings before delving into any children, where it will start the increments over from the set delay. I found this useful for stuff like a mobile-nav where only a single level is shown at a time.
 
 # Thanks!
 This repo is mostly for me, but if you find something useful, feel free to use :)
