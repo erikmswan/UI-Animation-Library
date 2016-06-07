@@ -8,8 +8,6 @@ Some of my useful methods for UI animation scoped under the ANIM object.
 This method will automatically add incremented delays to a set of elements. This is useful for when you'd like to stagger animations. While there are a number of other options to use out there, the main feature of this method is that it will also look for html attributes on the parent element in addition to passed options.
 
 ```javascript
-ANIM.setTiming(opt);
-
 // defaults shown here
 var opt = {
       parent: '.set-timing' // [selector] -- The parent class to look for
@@ -18,6 +16,8 @@ var opt = {
       increment: 40, // [int] or [html-attribute] -- value to increment in ms
       type: 'transition' // [string] -- either 'transition' or 'animation'
     }
+
+ANIM.setTiming(opt);
 ```
   
 #### Set-up
