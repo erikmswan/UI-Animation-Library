@@ -25,7 +25,7 @@ var ANIM = (function() {
       type: arg && arg.type ? arg.type : 'transition'
     }
 
-    $(opt.parent).each(function(el) {
+    $('.' + opt.parent).each(function(el) {
       if ((!arg || !arg.delay) && getTimingDelay($(this)) !== null) {
         opt.delay = getTimingDelay($(this));
       } else if (arg && arg.delay) {
