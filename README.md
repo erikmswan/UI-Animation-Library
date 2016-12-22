@@ -8,15 +8,15 @@ This method will automatically add incremented delays to a set of elements, whic
 
 ### Arguments
 
-* *parent* { String } 
+* **parent** { String } 
  * A selector or series of selectors upon whose children the timing delay will iterate. Can also be thought of as 'scope.'
-* *child* { String } 
+* **child** { String } 
  * A selector or series of selectors to target for when iterating the timing delay.
-* *delay* { Integer } 
+* **delay** { Integer } 
  * Time in ms. If left blank, it will search for the html attribute 'timing-delay' on the parent element. The number at which to begin the increment.
-* increment { Integer } 
+* **increment** { Integer } 
  * Time in ms. If left blank, it will search for the html attribute 'timing-increment' on the parent element. The amount to increment.
-* type { String } 
+* **type** { String } 
  * Either 'transition' or 'animation.' The delay property to set (either 'transition-delay' or 'animation-delay').
 
 Defaults below:
