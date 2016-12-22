@@ -42,10 +42,11 @@ ANIM.setTiming(opt);
   
 ### Options vs. Attributes
 
-1. There are two ways to set the delay and increment values -- you can either set it as an integer in the options, or you can set an attribute on the parent element (both in ms). I found the attributes very useful for times when I had to write a lot of markup and I didn't want to keep switching back and forth to a script to manage all of the animations. With this, you can manage your animation timeline right in the markup.
- * Timing delay is set as: timing-delay="300"
- * Timing increment is set as: timing-increment="40"
- * Note: attributes always have priority.
+There are two ways to set the delay and increment values -- you can either set it as an integer in the options, or you can set an attribute on the parent element (both in ms). I found the attributes very useful for times when I had to write a lot of markup and I didn't want to keep switching back and forth to a script to manage all of the animations. With this, you can manage your animation timeline right in the markup.
+
+* Timing delay is set as: timing-delay="300"
+* Timing increment is set as: timing-increment="40"
+* Note: attributes always have priority.
   
 To give an example, if you set the timing delay to 300 and the increment to 40, the children elements will get styles like this:
 
