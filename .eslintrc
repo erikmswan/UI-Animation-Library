@@ -1,0 +1,51 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-var": [
+            "error"
+        ],
+        "indent": [
+            "error",
+            4,
+            { "SwitchCase": 1 }
+        ],
+        "key-spacing": ["error", {
+            "multiLine" : {
+                "beforeColon" : true,
+                "afterColon"  : true
+
+            },
+            "align"     : {
+                "beforeColon" : true,
+                "afterColon"  : true,
+                "on"          : "colon"
+            }
+        }],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}
