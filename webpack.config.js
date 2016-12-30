@@ -1,9 +1,13 @@
-module.exports = {
+const path = require('path');
+
+let config = {
     entry  : './src/anim.js',
     output : {
+        path     : path.resolve(__dirname, 'dist'),
         filename : 'anim.js'
     },
-    module : {
+    devTool : '#cheap-inline-source-map',
+    module  : {
         loaders : [
             {
                 test    : /\.js$/,
@@ -16,3 +20,5 @@ module.exports = {
         ]
     }
 };
+
+module.exports = config;

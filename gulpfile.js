@@ -1,12 +1,13 @@
 /* eslint-disable */
 /* REQUIRES --------------------*/
 
-var gulp       = require('gulp');
-var error      = require('gulp-util');
-var sass       = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var minifyCSS  = require('gulp-cssnano');
-var webpack    = require('webpack-stream');
+var gulp         = require('gulp');
+var error        = require('gulp-util');
+var sass         = require('gulp-sass');
+var sourcemaps   = require('gulp-sourcemaps');
+var minifyCSS    = require('gulp-cssnano');
+var autoprefixer = require('gulp-autoprefixer');
+var webpack      = require('webpack-stream');
 
 var src  = './src/';
 var dist = './dist/';
@@ -29,6 +30,12 @@ gulp.task('sass', function () {
   gulp.src(src + 'anim.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', error.log))
+    .pipe(
+        autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        })
+    )
     .pipe(sourcemaps.write())
     .pipe(minifyCSS())
     .pipe(gulp.dest(dist));
